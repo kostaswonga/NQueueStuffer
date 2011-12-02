@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
@@ -8,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Castle.Windsor;
+using Autofac;
 using NQueueStuffer.Core;
 using NQueueStuffer.UI.Controller;
 
@@ -16,12 +15,12 @@ namespace NQueueStuffer.UI.View
 {
 	public partial class MdiForm : Form
 	{
-		private readonly IWindsorContainer _container = null;
+		private readonly IContainer _container = null;
 		private readonly IList<QueueStufferView> _views = new List<QueueStufferView>();
 		private readonly Font _selectedViewFont = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold);
 		private readonly Font _viewFont = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Regular);
 		private HelpView _helpForm;
-		public MdiForm(IWindsorContainer container)
+		public MdiForm(IContainer container)
 		{
 			InitializeComponent();
 			_container = container;

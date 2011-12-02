@@ -34,7 +34,9 @@ namespace NQueueStuffer.Core
         private IBus CreateBus()
         {
             return NServiceBus.Configure.With(new []{_messageType})
-               .CastleWindsorBuilder()
+               //.CastleWindsorBuilder()
+               .Autofac2Builder()
+               .Log4Net()
                .XmlSerializer()
                .MsmqTransport()
                    .IsTransactional(true)

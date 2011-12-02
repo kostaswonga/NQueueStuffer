@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows.Forms;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
 using NQueueStuffer.Core;
 using NQueueStuffer.UI.Controller;
 using NQueueStuffer.UI.View;
+using Autofac;
 
 namespace NQueueStuffer.UI
 {
@@ -21,13 +20,14 @@ namespace NQueueStuffer.UI
             Application.Run(new MdiForm(container));
         }
 
-        private static IWindsorContainer SetupContainer()
+        private static IContainer SetupContainer()
         {
-            var container = new WindsorContainer();
-            container.Register(Component.For<IAssemblyFetcher>().ImplementedBy<AssemblyFetcher>(),
-                               Component.For<IQueueStufferView>().ImplementedBy<QueueStufferView>(),
-                               Component.For<IQueueStufferController>().ImplementedBy<QueueStufferController>()); ;
-            return container;
+            var builder = new ContainerBuilder();
+            builder.RegisterType<AssemblyFetcher>().As<IAssemblyFetcher>();
+            builder.RegisterType<QueueStufferView>().As<IQueueStufferView>();
+            builder.RegisterType<QueueStufferController>().As<IQueueStufferController>();
+
+            return builder.Build();
         }
     }
 }
